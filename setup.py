@@ -11,10 +11,12 @@ __version__ = getVersionNumber()
 setup(name="SFcalculator_jax",
     version=__version__,
     author="Minhaun Li",
+    license="MIT",
     description="A Differentiable pipeline connecting molecule models and crystallpgraphy data", 
-    url=" ",
+    url="https://github.com/Hekstra-Lab/SFcalculator",
     author_email='minhuanli@g.harvard.edu',
     packages=find_packages(),
+    include_package_data=True,
     python_requires=">=3.7",
     install_requires=[
         "jax>=0.3.25",
