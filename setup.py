@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 # Get version number
 def getVersionNumber():
-    with open("careless/VERSION", "r") as vfile:
+    with open("source/VERSION", "r") as vfile:
         version = vfile.read().strip()
     return version
 
