@@ -17,10 +17,12 @@ setup(name="SFcalculator_jax",
     author_email='minhuanli@g.harvard.edu',
     packages=find_packages(),
     include_package_data=True,
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=[
         "jax>=0.3.25",
         "gemmi>=0.5.6",
         "reciprocalspaceship>=0.9.18",
     ],
+    setup_requires=["pytest-runner"],
+    tests_require=["pytest", "pytest-cov"],
 )
