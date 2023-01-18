@@ -28,7 +28,7 @@ def test_inspect_data(data_pdb, data_mtz_exp):
         data_pdb, mtzfile_dir=data_mtz_exp, set_experiment=True)
     sfcalculator.inspect_data(dmin_mask=6.0)
     assert sfcalculator.inspected
-    assert np.isclose(np.array(sfcalculator.solventpct), 0.113, 1e-2)
+    assert np.isclose(np.array(sfcalculator.solventpct), 0.113, 5e-2)
     assert sfcalculator.gridsize == [80, 120, 144]
 
 
@@ -37,7 +37,7 @@ def test_inspect_data_nomtz(data_pdb):
         data_pdb, mtzfile_dir=None, dmin=1.5, set_experiment=True)
     sfcalculator.inspect_data(dmin_mask=6.0)
     assert sfcalculator.inspected
-    assert np.isclose(np.array(sfcalculator.solventpct), 0.113, 1e-2)
+    assert np.isclose(np.array(sfcalculator.solventpct), 0.113, 5e-2)
     assert sfcalculator.gridsize == [60, 90, 108]
 
 

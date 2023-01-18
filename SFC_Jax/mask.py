@@ -25,7 +25,7 @@ def reciprocal_grid(Hp1_array, Fp1_tensor, gridsize, batchsize=None):
     if batchsize is not None:
         for i in range(batchsize):
             Fp1_tensor_i = Fp1_tensor[i]
-            grid_i = grid.clone() #type: ignore
+            grid_i = grid.copy() #type: ignore
             grid_i = grid_i.at[tuple_index].set(Fp1_tensor_i) # Reciprocal Grid of model i
             if i == 0:
                 grid_batch = grid_i[None, ...]
