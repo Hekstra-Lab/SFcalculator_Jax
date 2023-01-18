@@ -189,9 +189,13 @@ def expand_to_p1(spacegroup, Hasu_array, Fasu_tensor, idx_1, idx_2, dmin_mask=6.
     # Combine
     Fp1_tensor = jnp.concatenate(
         (Fp1_tensor, F_friedel_tensor), axis=concat_axis)
-
-    Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_1, axis=concat_axis)
-    Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_2, axis=concat_axis)
+    
+    if Batch:
+        Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_1[None, :], axis=concat_axis)
+        Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_2[None, :], axis=concat_axis)
+    else:
+        Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_1, axis=concat_axis)
+        Fp1_tensor = jnp.take_along_axis(Fp1_tensor, idx_2, axis=concat_axis)
 
     return Fp1_tensor
 

@@ -410,7 +410,7 @@ class SFcalculator(object):
             if Return:
                 return self.Fprotein_asu_batch
 
-    def Calc_Fsolvent_batch(self, solventpct=None, gridsize=None, dmin_mask=6, Return=False, PARTITION=100, dmin_nonzero=3.0):
+    def Calc_Fsolvent_batch(self, solventpct=None, gridsize=None, Return=False, PARTITION=100, dmin_nonzero=3.0):
         '''
         Should run after Calc_Fprotein_batch, calculate the solvent mask structure factors in batched manner
         most parameters are similar to `Calc_Fmask`
@@ -431,7 +431,7 @@ class SFcalculator(object):
 
         Fp1_tensor_batch = expand_to_p1(
             self.space_group, self.Hasu_array, self.Fprotein_asu_batch, self.idx_1, self.idx_2,
-            dmin_mask=dmin_mask, Batch=True, unitcell=self.unit_cell)
+            dmin_mask=self.dmin_mask, Batch=True, unitcell=self.unit_cell)
 
         batchsize = self.Fprotein_asu_batch.shape[0]  # type: ignore
         N_partition = batchsize // PARTITION + 1
@@ -459,7 +459,7 @@ class SFcalculator(object):
             else:
                 # Shape [N_batches, N_HKLs]
                 Fmask_batch = jnp.concatenate(
-                    (Fmask_batch, Fmask_batch_j), dim=0)  # type: ignore
+                    (Fmask_batch, Fmask_batch_j), axis=0)  # type: ignore
         zero_hkl_bool = jnp.array(self.dHKL <= dmin_nonzero)
         Fmask_batch = jnp.where(zero_hkl_bool, jnp.array(
             0., dtype=jnp.complex64), Fmask_batch)
@@ -627,5 +627,5 @@ def F_protein_batch(HKL_array, dr2_array, fullsf_tensor, reciprocal_cell_paras,
             F_calc = Fcalc_j
         else:
             # Shape [N_batches, N_HKLs]
-            F_calc = jnp.concatenate((F_calc, Fcalc_j), dim=0)  # type: ignore
+            F_calc = jnp.concatenate((F_calc, Fcalc_j), axis=0)  # type: ignore
     return F_calc
