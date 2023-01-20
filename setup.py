@@ -17,7 +17,7 @@ setup(name="SFcalculator_jax",
     author_email='minhuanli@g.harvard.edu',
     packages=find_packages(),
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.7",
     install_requires=[
         "jax>=0.3.25",
         "gemmi>=0.5.6",
