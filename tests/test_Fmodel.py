@@ -52,13 +52,22 @@ def test_calc_Fprotein(data_pdb, data_mtz_exp, data_mtz_fmodel_ksol0, Return):
 
     if Return:
         Fprotein_arr = np.array(Fprotein)
-        assert pearsonr(np.abs(Fprotein_arr),
-                        Fcalc['FMODEL'].to_numpy()).statistic > 0.99
+        try: 
+            assert pearsonr(np.abs(Fprotein_arr),
+                            Fcalc['FMODEL'].to_numpy()).statistic > 0.99
+        except:
+            assert pearsonr(np.abs(Fprotein_arr),
+                            Fcalc['FMODEL'].to_numpy())[0] > 0.99
     else:
         assert Fprotein is None
         Fprotein_arr = np.array(sfcalculator.Fprotein_HKL)
-        assert pearsonr(np.abs(Fprotein_arr),
-                        Fcalc['FMODEL'].to_numpy()).statistic > 0.99
+        try:
+            assert pearsonr(np.abs(Fprotein_arr),
+                            Fcalc['FMODEL'].to_numpy()).statistic > 0.99
+        except:
+            assert pearsonr(np.abs(Fprotein_arr),
+                            Fcalc['FMODEL'].to_numpy())[0] > 0.99
+            
 
 
 @pytest.mark.parametrize("Return", [True, False])
@@ -87,13 +96,21 @@ def test_calc_Fsolvent(data_pdb, data_mtz_exp, data_mtz_fmodel_ksol0, data_mtz_f
 
     if Return:
         Fsolvent_arr = np.array(Fsolvent)
-        assert pearsonr(np.abs(Fsolvent_arr), np.abs(
-            Fmask_complex)).statistic > 0.95
+        try:
+            assert pearsonr(np.abs(Fsolvent_arr), np.abs(
+                Fmask_complex)).statistic > 0.95
+        except:
+            assert pearsonr(np.abs(Fsolvent_arr), np.abs(
+                Fmask_complex))[0] > 0.95 
     else:
         assert Fsolvent is None
         Fsolvent_arr = np.array(sfcalculator.Fmask_HKL)
-        assert pearsonr(np.abs(Fsolvent_arr), np.abs(
-            Fmask_complex)).statistic > 0.95
+        try:
+            assert pearsonr(np.abs(Fsolvent_arr), np.abs(
+                Fmask_complex)).statistic > 0.95
+        except:
+            assert pearsonr(np.abs(Fsolvent_arr), np.abs(
+                Fmask_complex))[0] > 0.95 
 
 
 @pytest.mark.parametrize("case", [1, 2])
