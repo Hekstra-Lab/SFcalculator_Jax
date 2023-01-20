@@ -327,10 +327,11 @@ class SFcalculator(object):
 
         # Shape [N_HKL_p1, 3], [N_HKL_p1,]
         Fp1_tensor = expand_to_p1(
-            self.space_group, self.Hasu_array, self.Fprotein_asu, 
+            self.space_group, self.Hasu_array, self.Fprotein_asu,
             self.idx_1, self.idx_2,
             dmin_mask=self.dmin_mask, unitcell=self.unit_cell)
-        rs_grid = reciprocal_grid(self.Hp1_array_filtered, Fp1_tensor, gridsize)
+        rs_grid = reciprocal_grid(
+            self.Hp1_array_filtered, Fp1_tensor, gridsize)
         self.real_grid_mask = rsgrid2realmask(
             rs_grid, solvent_percent=solventpct)  # type: ignore
         if not self.HKL_array is None:
@@ -460,14 +461,17 @@ class SFcalculator(object):
                 # Shape [N_batches, N_HKLs]
                 Fmask_batch = jnp.concatenate(
                     (Fmask_batch, Fmask_batch_j), axis=0)  # type: ignore
-        zero_hkl_bool = jnp.array(self.dHKL <= dmin_nonzero)
-        Fmask_batch = jnp.where(zero_hkl_bool, jnp.array(
-            0., dtype=jnp.complex64), Fmask_batch)
         if not self.HKL_array is None:
+            zero_hkl_bool = jnp.array(self.dHKL <= dmin_nonzero)
+            Fmask_batch = jnp.where(zero_hkl_bool, jnp.array(
+                0., dtype=jnp.complex64), Fmask_batch)
             self.Fmask_HKL_batch = Fmask_batch
             if Return:
                 return self.Fmask_HKL_batch
         else:
+            zero_hkl_bool = jnp.array(self.dHasu <= dmin_nonzero)
+            Fmask_batch = jnp.where(zero_hkl_bool, jnp.array(
+                0., dtype=jnp.complex64), Fmask_batch)
             self.Fmask_asu_batch = Fmask_batch
             if Return:
                 return self.Fmask_asu_batch
