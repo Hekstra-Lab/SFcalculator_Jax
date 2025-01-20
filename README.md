@@ -16,3 +16,15 @@ To install this package:
     pip install SFcalculator-jax
     ```
 
+### Citing
+
+```
+@article{li2025sfcalculator,
+  title={SFCalculator: connecting deep generative models and crystallography},
+  author={Li, Minhuan and Dalton, Kevin M and Hekstra, Doeke Romke},
+  journal={bioRxiv},
+  pages={2025--01},
+  year={2025},
+  publisher={Cold Spring Harbor Laboratory}
+}
+```
